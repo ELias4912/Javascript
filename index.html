@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>awesome guessing</h1>
+    <h3>How many frogs am i thinking about?</h3>
+    <h3 id="score">Score:</h3>
+    <h3 id="tid"></h3>
+
+   
+
+    <input id="input_field" type="number"><button id="guess_button">Guess</button>
+    <button id="restart">restart</button>
+
+    <div id="feedback"></div>
+
+
+    <script>
+        var number = Math.floor(Math.random() * 10)
+        var score = 0
+        var tid = 10
+        var antall_forsøk = 3
+        var countdown_active = false
+        // velg html innhold, vi velger button tag med id guess_button
+        var button = document.getElementById("guess_button")
+        var input_field = document.getElementById("input_field")
+        var score_EL = document.getElementById("score")
+        var restart_button = document.getElementById("restart")
+        var tid_EL = document.getElementById("tid")
+        var feedback_EL = document.getElementById("feedback")
+        
+
+        score_EL.innerHTML = "Score" + score
+
+        function guess() {
+            console.log("clicked guess button")
+            console.log("Random number: ",number)
+            console.log("Guessed number:",input_field.value)
+
+            countdown_active = true
+
+            if (number == input_field.value) { // når vi gjetter riktig
+                feedback_EL.innerHTML = "Du gjettet riktig!" 
+                number = Math.floor(Math.random() *10)
+                score ++
+                tid = 10
+                countdown_active = false
+                score_EL.innerHTML = "Score" + score
+
+            } else if (number > input_field.value) {
+                feedback_EL.innerHTML = "Du gjettet for lavt"
+                forsøk--
+         
+            } else { 
+                feedback_EL.innerHTML = "du gjettet for høyt"
+                forsøk--
+                
+            }    
+            if (forsøk == 0){      
+                // hva som skjer ved 0 forsøk igjen
+                
+            }
+        } 
+        function restart(){
+            console.log("clicked restart knapp")
+            console.log("0 Score: ",score = 0)
+                number = 0
+                number = Math.floor(Math.random() * 10)
+               
+
+            }
+        
+            function countdown(){
+                if (tid > 0 && countdown_active){
+                tid = tid -1
+                console.log("tid",tid)
+                
+            }
+
+                if (tid == 0){
+                score--
+                score_EL.innerHTML = "Score: " + score
+                feedback_EL.innerHTML = "Tiden gikk ut.."
+                number = Math.floor(Math.random() * 10)
+                tid = 10
+
+
+                
+            }
+
+             tid_EL.innerHTML = "Tid" + tid
+        }    
+        
+            var countdown_timer = setInterval(countdown, 1000)
+
+
+        // vi må legge til en eventlistener til button som vi valgte
+        button.addEventListener("click", guess)
+        restart_button.addEventListener("click",restart)
+        
+    </script>
+    
+</body>
+</html>

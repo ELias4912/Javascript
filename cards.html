@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cards</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ 
+    <div>
+        <button id="drawButton">Draw</button><br>
+        <div id="playerCards"></div>
+        <div id="dealerCards"></div>
+
+
+        <img id="card" src="" alt="No card" width="250" height="363">
+        <img id="dealer_card" src="" alt="No card" width="250" height="363">
+
+    </div>
+ 
+    <script>
+        var suits = ['hearts', 'diamonds', 'clubs', 'spades'];
+        var ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king', 'ace'];
+        var deck = [];
+ 
+        var drawbutton = document.getElementById('drawButton')
+        var card_EL = document.getElementById('card')
+        var dealer_card = document.getElementById("dealer_card")
+        var playerCards = document.getElementById("playerCards")
+        var dealerCards = document.getElementById("dealerCards")
+ 
+        function initializeDeck() { // lager en kortstokk, kjekt om vi vil lage flere kortstokker
+            deck = []; // tom kortstokk
+            for (let suit of suits) { // looper for å gå gjennom alle kort
+                for (let rank of ranks) {
+                    deck.push(`${rank}_of_${suit}.png`); // legger til en tekst som representerer et kort i listen
+                }
+            }
+        }
+ 
+        function drawCard() {
+            if (deck.length === 0) {
+                alert("No more cards in the deck!");
+                return;
+            }
+            var randomIndex = Math.floor(Math.random() * deck.length); // velger et tilfeldig kort fra kortstokken
+            var card = deck.splice(randomIndex, 1)[0]; // velger 1 kort og fjerner det fra deck
+ 
+            //card_EL.src = `cards/${card}`; // endrer src på img element, slik at bildet vises 
+
+            var new_card_image = document.createElement("img")
+            new_card_image.src = `cards/${card}`
+            new_card_image.classList.add("card")
+            playerCards.appendChild(new_card_image)
+
+            console.log(deck)
+            setTimeout(dealer_drawCard, 2000)
+        }
+
+        function dealer_drawCard() {
+            if (deck.length === 0) {
+                alert("No more cards in the deck!");
+                return;
+            }
+            var randomIndex = Math.floor(Math.random() * deck.length); // velger et tilfeldig kort fra kortstokken
+            var card = deck.splice(randomIndex, 1)[0]; // velger 1 kort og fjerner det fra deck
+ 
+            //dealer_card.src = `cards/${card}`; // endrer src på img element, slik at bildet vises 
+            console.log/deck
+        }
+
+
+ 
+        drawbutton.addEventListener('click', drawCard);
+ 
+        // Initialize the deck when the script loads
+        initializeDeck();
+ 
+    </script>
+</body>
+</html>
